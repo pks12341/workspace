@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions><!-- 공통부분 미리 정의하는 부분 -->
+	<definition name="mainTemplate" template="/WEB-INF/views/layout/default_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/layout/default_header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/layout/default_footer.jsp" />
+	</definition>
+	
+	<definition name = "*/*" extends = "mainTemplate"><!-- 상속받아서 덮어쓰거나 추가하는 부분 emp/empList처럼 /기준으로..-->
+		<put-attribute name="content" value = "/WEB-INF/views/{1}/{2}.jsp" /><!-- *개수만큼1,2들어감 -->
+	</definition>
+	
+	<definition name = "home" extends = "mainTemplate"><!-- 상속받아서 덮어쓰거나 추가하는 부분 emp/empList처럼 /기준으로..-->
+		<put-attribute name="content" value = "/WEB-INF/views/home.jsp" /><!-- *개수만큼1,2들어감 -->
+	</definition>
+</tiles-definitions>

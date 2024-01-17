@@ -38,22 +38,22 @@
 		<div>
 			<button type = "button" onclick = "location.href='empList'">목록으로</button>
 			<button type = "button" id ="updateBtn">수정</button>
-			<button type = "button">삭제</button>
+			<button type = "button" onclick = "location.href='empDelete?eid=${empInfo.employeeId}'">삭제</button><!-- 컨트롤러에서 사용한 변수인 eid를 쓴다 -->
 			
 		</div>
 	</form>
   <script>
-  	document.querySelector('#updateBtn')
+  	document.querySelector('#updateBtn')//위에 id=updateBtn부분
   		.addEventListener('click', updateEmpInfo);
   	
-  	function updateEmpInfo(event){
+  	function updateEmpInfo(event){ 
   		//form태그 내부의 입력태그를 기반으로 정보를 가져옴
   		let empInfo = getEmpInfo();
   		console.log(empInfo);
   		
   		//해당 정보를 기반으로 Ajax
-  		//QueryString 
-  		fetch('empUpdate',{
+  		//QueryString : key=value&key=value.. 객체랑은 다른형태 그래서 변환이필요
+   		fetch('empUpdate',{ //실제 컨트롤러의 경로
   			method : 'post',
   			body : new URLSearchParams(empInfo)
   		})
@@ -62,13 +62,29 @@
   			console.log('QueryString',result)
   		})
   		.catch(err=>console.log(err));
+  		
+  		// - JSON : {"key":"value", "key" : "value",...}(객체이다)
+  		fetch('empUpdateAjax',{
+  			method : 'post',//json방식 자체가 get방식으로 넘길수없다ㅣ. 그래서 post로 body에 담아 넘겨야함
+  			headers : {
+  				'content-type' : 'application/json'//
+  			},
+  			body : JSON.stringify(empInfo) //변환 method
+  			
+  		})
+  		.then(response=>response.json())
+  		.then(result => {
+  			console.log('JSON',result)
+  		})
+  		.catch(err=>console.log(err));
   	}
+  	
   	function getEmpInfo(){
-  		let inputList = document.querySelectorAll('form input');
+  		let inputList = document.querySelectorAll('form input'); //form태그를 기준으로 하위의 모든 input태그 불러옴 form과 input사이 공백 = 하위요소를 의미
   		
   		let objData = {};
   		inputList.forEach(tag => {
-  			objData[tag.name] = tag.value;
+  			objData[tag.name] = tag.value; //배열이아니라push가아님
   		});
   		
   		return objData;

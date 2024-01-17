@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yedam.app.emp.service.EmpService;
@@ -78,4 +79,14 @@ public class EmpController {
 	}
 	
 	//사원삭제 - PROCESS
+	//삭제는 POST가 제일 좋긴 하지만 get으로 하는경우도 있다
+	@GetMapping("empDelete")
+	public String empDelete(@RequestParam Integer eid) {
+		empService.deleteEmpInfo(eid);
+		return "redirect:empList";
+		
+	}
+	
+	
+	
 }	
