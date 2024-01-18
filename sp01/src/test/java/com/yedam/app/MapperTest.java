@@ -14,25 +14,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.app.board.mapper.BoardMapper;
+import com.yedam.app.board.service.BoardVO;
 import com.yedam.app.emp.mapper.EmpMapper;
 import com.yedam.app.emp.service.EmpVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/*-context.xml")
 public class MapperTest {
 	
 	@Autowired
 	EmpMapper empMapper;
 	
+	@Autowired
+	BoardMapper boardMapper;
+	
 	//전체조회
-	@Test
+	//@Test
 	public void selectAll() {
 		List<EmpVO> list = empMapper.selectEmpList();
 		assertTrue(!list.isEmpty());
 	}
 	
+
 	//단건조회
-	@Test
+	//@Test
 	public void selectInfo() {
 		EmpVO empVO = new EmpVO();
 		empVO.setEmployeeId(100);
@@ -76,10 +82,43 @@ public class MapperTest {
 	}
 	
 	//삭제
-	@Test
+	//@Test
 	public void deleteInfo() {
 		int result = empMapper.deleteEmpInfo(207);
 		assertNotEquals(result, 0);
 	}
+	
+	/////////////////////////Board
+	
+	//게시판전체조회
+	//@Test
+	public void selectAll2() {
+		List<BoardVO> list = boardMapper.selectBoardList();
+		assertTrue(!list.isEmpty());
+	}
+	
+	//게시판 단건
+	@Test
+	public void selectInfo2() {
+		BoardVO boardVO = new BoardVO();
+		boardVO.setBno(1001);
+		BoardVO findVO = boardMapper.selectBoard(boardVO);
+		assertEquals(findVO.getWriter(), "ABC");
+	}
+	
+	//등록
+		//@Test
+		public void insertInfo2() {
+			BoardVO boardVO = new BoardVO();
+			boardVO.setTitle("ABC1121");
+			boardVO.setContents("ASDd");
+			boardVO.setWriter("ABCd");
+			boardVO.setImage("asdsadasd2");
+
+			
+			int result = boardMapper.insertBoard(boardVO);
+			assertNotEquals(result, 0);//assertNotEquals(empVO.getEmployeeId(), 0);도 가능
+		}
+	
 	
 }
