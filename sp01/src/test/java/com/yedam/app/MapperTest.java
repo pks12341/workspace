@@ -2,7 +2,6 @@ package com.yedam.app;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -14,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.app.aop.service.AaaService;
 import com.yedam.app.board.mapper.BoardMapper;
 import com.yedam.app.board.service.BoardVO;
 import com.yedam.app.emp.mapper.EmpMapper;
 import com.yedam.app.emp.service.EmpVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/*-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*-context.xml")
 public class MapperTest {
 	
 	@Autowired
@@ -28,6 +28,8 @@ public class MapperTest {
 	
 	@Autowired
 	BoardMapper boardMapper;
+	
+	
 	
 	//전체조회
 	//@Test
@@ -98,7 +100,7 @@ public class MapperTest {
 	}
 	
 	//게시판 단건
-	@Test
+	//@Test
 	public void selectInfo2() {
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBno(1001);
@@ -110,7 +112,7 @@ public class MapperTest {
 		//@Test
 		public void insertInfo2() {
 			BoardVO boardVO = new BoardVO();
-			boardVO.setTitle("ABC1121");
+			boardVO.setTitle("ABC1121");	
 			boardVO.setContents("ASDd");
 			boardVO.setWriter("ABCd");
 			boardVO.setImage("asdsadasd2");
@@ -118,6 +120,14 @@ public class MapperTest {
 			
 			int result = boardMapper.insertBoard(boardVO);
 			assertNotEquals(result, 0);//assertNotEquals(empVO.getEmployeeId(), 0);도 가능
+		}
+		
+		@Autowired 
+		AaaService aaaService;
+		
+		@Test
+		public void aopTest() {
+			aaaService.insert();
 		}
 	
 	

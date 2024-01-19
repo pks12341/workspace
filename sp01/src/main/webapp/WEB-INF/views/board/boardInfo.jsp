@@ -26,7 +26,7 @@
 		<tr>
 			<th>이미지</th>
 			<!-- app.jpg -->
-			<td><img src = "<c:url value = "/resources/${boardInfo.image}"/>"></td>
+			<td><img style = "width:200px;" src = "<c:url value = "/resources/${boardInfo.image}"/>"></td>
 		</tr>
 		<tr>
 			<th>작성 날짜</th>
@@ -37,9 +37,9 @@
 </div>
 <div>
 	<button type="button" onclick="location.href='boardList'">목록으로</button>
-	<button type="button" id="updateBtn">수정</button>
+	<button type="button" onclick="location.href='boardUpdate?bno=${boardInfo.bno}'" id="updateBtn">수정</button>
 	<button type="button"
-		onclick="location.href='boardDelete?eid=${boardInfo.bno}'">삭제</button>
+		onclick="location.href='boardDelete?bno=${boardInfo.bno}'">삭제</button>
 	<!-- 컨트롤러에서 사용한 변수인 bno를 쓴다 -->
 
 </div>

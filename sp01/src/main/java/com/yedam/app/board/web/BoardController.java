@@ -51,19 +51,21 @@ public class BoardController {
 	}
 	
 	//게시글수정 - 별도 페이지 : URI : boardUpdate / parameter : BoardVO / Return : board/boardUpdate
-	@PostMapping("boardUpdate")
-	@ResponseBody
-	public Map<String, Object> boardUpdateProcess(BoardVO boardVO){
-		return boardService.updateBoardInfo(boardVO);
+	@GetMapping("boardUpdate")
+	public String boardUpdate(BoardVO boardVO, Model model) {
+		BoardVO findVO = boardService.getBoardInfo(boardVO);
+		model.addAttribute("boardInfo",findVO);
+		return "board/boardUpdate";
 	}
 	
 	//게시글수정 - 처리 : uri : boardUpdate / parameter : BoardVO / return : 수정결과 데이터(Map)
+	// => Ajax
 	
-	@PostMapping("boardUpdateAjax")
+	@PostMapping("boardUpdate")
 	@ResponseBody
-	public Map<String, Object> boardUpdateAjaxProcess(@RequestBody BoardVO boardVO){
+	public Map boardUpdateProcess(BoardVO boardVO, Model model) {
 		return boardService.updateBoardInfo(boardVO);
-	}	
+	}
 	
 	//게시글삭제 
 	@GetMapping("boardDelete")

@@ -3,9 +3,9 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %><!-- jsp가 가진 정보를 명시할때 사용 -->
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class = "table">
+<div>
 <h1>자유게시판</h1>
-	<table>
+	<table class="table">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -32,15 +32,3 @@
 
 </div>
 
-<style>
-tr, th, td{
-border : 2px solid black;
-width : 300px;
-height : 80px;
-text-align : center;
-
-}
-th{
-background-color : beige
-}
-</style>

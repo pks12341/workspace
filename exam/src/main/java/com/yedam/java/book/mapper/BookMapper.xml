@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.java.book.mapper.BookMapper">
+	<!-- 도서조회 -->
+	<select id="getBookList" resultType="BookVO">
+		SELECT book_no
+			  ,book_name
+			  ,book_coverimg
+			  ,book_date
+			  ,book_price
+			  ,book_publisher
+			  ,book_info
+		FROM BOOK_TBL_06
+		ORDER BY book_no	
+	</select>
+	
+	<!-- 도서등록 -->
+	<insert id="insertBook" parameterType="BookVO">
+		<selectKey keyProperty="bookNo" order="BEFORE"
+			resultType="Integer">
+			SELECT NVL(max(book_no),0) + 1 
+			FROM BOOK_TBL_06
+		</selectKey>
+		INSERT INTO
+		BOOK_TBL_06 (
+		 		book_no
+			  ,book_name
+			  ,book_coverimg
+			  ,book_date
+			  ,book_price
+			  ,book_publisher
+			  ,book_info
+		)
+		VALUES (
+		#{bookNo},
+		#{bookName},
+		#{bookCoverimg},
+		#{bookDate},
+		#{bookPrice},
+		#{bookPublisher},
+		#{bookInfo}
+		)
+	</insert>
+	
+	<!-- 대여조회 -->
+	<select id="getBorrowList" resultType="BookVO2">
+		 SELECT 
+             A.book_no
+			  ,book_name
+			  ,SUM(rent_price) AS sum_price
+              ,count(A.book_no) AS all_count 
+              
+		FROM BOOK_TBL_06 A join RENT_TBL_06 B ON A.BOOK_NO = B.BOOK_NO
+      GROUP BY A.BOOK_NO,A.book_name	
+	</select>
+	
+</mapper>
