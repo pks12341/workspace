@@ -11,7 +11,7 @@ public class EmpController {
 	@Autowired
 	EmpMapper empMapper;
 	
-	@GetMapping("/empList")
+	@GetMapping("/admin/empList")// /admin넣으면 관리자만 접근가능
 	public String list(Model model) {
 		model.addAttribute("list", empMapper.getEmpList(null));
 		return "empList" ;
