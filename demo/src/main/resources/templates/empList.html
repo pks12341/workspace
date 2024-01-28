@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>empList.html</title>
+<style>
+	.odd{
+		background-color : yellowgreen;
+	}
+	.basic{
+		background-color : pink;
+		font-weight : bold;
+	}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+<div>전체건수 : [[${#lists.size(list)}]]</div>
+<div th:text="${#lists.size(list)}"></div>
+	<table>
+		<tr>
+	 		<th>No.</th>
+	 		<th>employee_id</th>
+	 		<th>name</th>
+	 		<th>hire_date</th>
+	 		<th>salary</th>
+	 		<th>grade</th>
+	 	</tr>
+	 	<th:block th:each="emp : ${list}">
+		<tr th:class="${empStat.odd} ? 'odd'" th:classappend="${empStat.first} ? 'basic'" >
+	 		<td th:text="${empStat.count}"></td>
+	 		
+	 		<td><a th:href="@{info.do(employeeId=${emp.employeeId},name=${emp.firstName})}" th:text="${emp.employeeId}"></a></td>
+	 		
+	 		<td th:text="|${emp.firstName},${emp.lastName}|"></td>
+	 		<td th:text="${#dates.format(emp.hireDate, 'yyyy년 MMM dd일')}"></td>
+	 		<td th:text="${emp.salary}"></td>
+	 		<td th:if="${emp.salary}>10000" th:text="A"></td>
+	 		<td th:unless="${emp.salary}>10000" th:text="B"></td>
+	 	</tr>
+	 	</th:block>
+	</table>
+<!--/* 	<th:block th:each="emp : ${list}">
+	 		<span th:utext="|반가워요 <br> ${emp.firstName}님|"></span>		그냥 text로 하면 태그도 문자로 인식하지만 utext를 적용하면 태그도 인식되어 뿌려쥰다
+			<span th:text="${emp.firstName}"></span>
+			<span th:text="${emp.lastName}"></span>
+	 		<div>[[${list[0].firstName}]]</div>
+	 		<div>[(${list[0].firstName})]</div>
+	 		<br>
+ 		</th:block> */-->
+ 	
+	<script th:inline="javascript">
+		let emps = [[${list}]]
+	</script>
+</section>
+</body>
+</html>
